@@ -94,8 +94,6 @@ This application is designed to be hosting-friendly and can be deployed to:
 
 - **Vercel**: Connect your repository and deploy automatically
 - **Netlify**: Drag and drop the `dist/` folder or connect to Git
-- **GitHub Pages**: Use `npm run build` and deploy the `dist/` folder
-- **Firebase Hosting**: `firebase deploy` after building
 - **Any static hosting**: Upload the `dist/` folder contents
 
 ## Environment Variables
