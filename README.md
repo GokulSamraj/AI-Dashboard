@@ -42,7 +42,22 @@ A modern Vue.js web application that allows you to paste Google Sheets data and 
 
 5. **Open your browser** to `http://localhost:3000`
 
-### Option 2: One-Click Vercel Deployment
+### Option 2: GitHub Pages Deployment (Free)
+
+[![Deploy to GitHub Pages](https://github.com/actions/workflows/deploy.yml/badge.svg)](https://github.com/<your-username>/AI-Dashboard/actions)
+
+**Manual GitHub Pages Setup:**
+1. **Push your code to GitHub**
+2. **Enable GitHub Pages** in your repository settings:
+   - Go to Settings → Pages
+   - Source: Deploy from a branch
+   - Branch: `main` and folder: `/root`
+3. **Configure Secrets** in repository settings:
+   - `VITE_OPENAI_API_KEY`: Your OpenAI API key (optional)
+   - `VITE_GEMINI_API_KEY`: Your Gemini API key (optional)
+4. **Push changes** to trigger automatic deployment
+
+### Option 3: One-Click Vercel Deployment
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=<your-repo-url>)
 
@@ -77,6 +92,10 @@ VITE_GEMINI_API_KEY=your_gemini_api_key_here
 - At least one API key is required
 - You can configure both for automatic fallback support
 - OpenAI is tried first, Gemini is used as fallback
+
+**For GitHub Pages Deployment:**
+- Add `VITE_OPENAI_API_KEY` and/or `VITE_GEMINI_API_KEY` as repository secrets
+- The app will work with just one API key configured
 
 **For Vercel Deployment:**
 - Add `VITE_OPENAI_API_KEY` and/or `VITE_GEMINI_API_KEY` as environment variables
@@ -125,7 +144,7 @@ Tom Brown	38	Phoenix	20000	Product B
 - **Build Tool**: Vite
 - **Styling**: CSS3 with responsive design
 - **API**: OpenAI GPT-4o-mini API with Gemini 2.0 Flash fallback
-- **Deployment**: Vercel
+- **Deployment**: GitHub Pages, Vercel, or any static hosting
 
 ## File Structure
 
@@ -143,6 +162,8 @@ Tom Brown	38	Phoenix	20000	Product B
 ├── vite.config.js          # Vite configuration
 ├── vercel.json             # Vercel deployment config
 ├── .env.example            # Environment variables template
+├── .github/workflows/      # GitHub Actions workflows
+│   └── deploy.yml          # Auto-deployment to GitHub Pages
 └── README.md               # This documentation
 ```
 
@@ -194,7 +215,32 @@ npm run preview  # Preview production build
 
 ## Deployment
 
-### Vercel (Recommended)
+### GitHub Pages (Free & Recommended)
+
+1. **Push your code to GitHub**
+2. **Enable GitHub Pages** in repository settings:
+   - Go to Settings → Pages
+   - Source: Deploy from a branch
+   - Branch: `main` and folder: `/root`
+3. **Configure Repository Secrets**:
+   - Go to Settings → Secrets and variables → Actions
+   - Add `VITE_OPENAI_API_KEY`: Your OpenAI API key (optional)
+   - Add `VITE_GEMINI_API_KEY`: Your Gemini API key (optional)
+4. **Deploy** - GitHub Actions will automatically build and deploy on push
+
+### Hosting Options Comparison
+
+| Feature | GitHub Pages | Vercel | Manual Hosting |
+|---------|-------------|--------|----------------|
+| **Cost** | Free | Free tier available | Depends on provider |
+| **Setup** | Medium (manual config) | Easy (one-click) | Manual |
+| **Auto-deploy** | ✅ Via GitHub Actions | ✅ Automatic | ❌ Manual |
+| **Custom Domain** | ✅ Supported | ✅ Supported | ✅ Varies |
+| **Environment Variables** | ✅ Repository Secrets | ✅ Dashboard | ❌ Manual config |
+| **Build Time** | ~3 minutes | ~2 minutes | N/A |
+| **SSL Certificate** | ✅ Automatic | ✅ Automatic | Varies |
+
+### Vercel (Alternative)
 
 1. **Push your code to GitHub**
 2. **Connect your repository to Vercel**
@@ -255,8 +301,26 @@ npm run preview  # Preview production build
 
 5. **Build/Deploy Issues**
    - Ensure all dependencies are installed: `npm install`
-   - Check that environment variables are properly configured
-   - Verify your `vercel.json` configuration
+   - Check that environment variables/secrets are properly configured
+   - For GitHub Pages: Check Actions tab for deployment logs
+   - For Vercel: Verify your `vercel.json` configuration
+
+### GitHub Pages Specific Issues
+
+1. **404 errors after deployment**
+   - Ensure `base` path in `vite.config.js` matches your repository name
+   - Current setting: `base: '/AI-Dashboard/'`
+   - Update if your repository has a different name
+
+2. **Deployments failing**
+   - Check Actions tab in GitHub repository for detailed error logs
+   - Ensure repository secrets are properly configured
+   - Verify GitHub Pages is enabled in repository settings
+
+3. **Environment variables not working**
+   - Make sure secrets are added at repository level (not organization)
+   - Secrets must be named exactly: `VITE_OPENAI_API_KEY` and `VITE_GEMINI_API_KEY`
+   - Check that secrets are added to Actions, not just general repository secrets
 
 ### Tips
 
