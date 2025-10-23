@@ -42,24 +42,7 @@ A modern Vue.js web application that allows you to paste Google Sheets data and 
 
 5. **Open your browser** to `http://localhost:3000`
 
-### Option 2: GitHub Pages Deployment (Free)
-
-[![Deploy to GitHub Pages](https://github.com/actions/workflows/deploy.yml/badge.svg)](https://github.com/<your-username>/AI-Dashboard/actions)
-
-**Automatic GitHub Pages Setup:**
-1. **Push your code to GitHub**
-2. **Enable GitHub Pages** in your repository settings:
-   - Go to Settings → Pages
-   - Source: GitHub Actions
-3. **Configure Secrets** in repository settings:
-   - Go to Settings → Secrets and variables → Actions
-   - Add `VITE_OPENAI_API_KEY`: Your OpenAI API key (optional)
-   - Add `VITE_GEMINI_API_KEY`: Your Gemini API key (optional)
-4. **Push changes** to trigger automatic deployment
-
-   *The workflow includes all necessary permissions for deployment.*
-
-### Option 3: One-Click Vercel Deployment
+### Option 2: One-Click Vercel Deployment
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=<your-repo-url>)
 
@@ -95,12 +78,12 @@ VITE_GEMINI_API_KEY=your_gemini_api_key_here
 - You can configure both for automatic fallback support
 - OpenAI is tried first, Gemini is used as fallback
 
-**For GitHub Pages Deployment:**
-- Add `VITE_OPENAI_API_KEY` and/or `VITE_GEMINI_API_KEY` as repository secrets
-- The app will work with just one API key configured
-
 **For Vercel Deployment:**
 - Add `VITE_OPENAI_API_KEY` and/or `VITE_GEMINI_API_KEY` as environment variables
+- The app will work with just one API key configured
+
+**For Manual Deployment:**
+- Create a `.env` file with your API keys before building
 - The app will work with just one API key configured
 
 ## How to Use
@@ -146,7 +129,7 @@ Tom Brown	38	Phoenix	20000	Product B
 - **Build Tool**: Vite
 - **Styling**: CSS3 with responsive design
 - **API**: OpenAI GPT-4o-mini API with Gemini 2.0 Flash fallback
-- **Deployment**: GitHub Pages, Vercel, or any static hosting
+- **Deployment**: Vercel, Netlify, or any static hosting
 
 ## File Structure
 
@@ -164,8 +147,6 @@ Tom Brown	38	Phoenix	20000	Product B
 ├── vite.config.js          # Vite configuration
 ├── vercel.json             # Vercel deployment config
 ├── .env.example            # Environment variables template
-├── .github/workflows/      # GitHub Actions workflows
-│   └── deploy.yml          # Auto-deployment to GitHub Pages
 └── README.md               # This documentation
 ```
 
@@ -217,36 +198,7 @@ npm run preview  # Preview production build
 
 ## Deployment
 
-### GitHub Pages (Free & Recommended)
-
-1. **Push your code to GitHub**
-2. **Enable GitHub Pages** in repository settings:
-   - Go to Settings → Pages
-   - Source: GitHub Actions
-3. **Configure Repository Secrets**:
-   - Go to Settings → Secrets and variables → Actions
-   - Add `VITE_OPENAI_API_KEY`: Your OpenAI API key (optional)
-   - Add `VITE_GEMINI_API_KEY`: Your Gemini API key (optional)
-4. **Deploy** - GitHub Actions will automatically build and deploy on push
-
-**Important:**
-- The workflow file includes all necessary permissions
-- Make sure `package-lock.json` is committed to your repository
-- No manual GitHub Pages configuration needed beyond selecting "GitHub Actions" as source
-
-### Hosting Options Comparison
-
-| Feature | GitHub Pages | Vercel | Manual Hosting |
-|---------|-------------|--------|----------------|
-| **Cost** | Free | Free tier available | Depends on provider |
-| **Setup** | Medium (manual config) | Easy (one-click) | Manual |
-| **Auto-deploy** | ✅ Via GitHub Actions | ✅ Automatic | ❌ Manual |
-| **Custom Domain** | ✅ Supported | ✅ Supported | ✅ Varies |
-| **Environment Variables** | ✅ Repository Secrets | ✅ Dashboard | ❌ Manual config |
-| **Build Time** | ~3 minutes | ~2 minutes | N/A |
-| **SSL Certificate** | ✅ Automatic | ✅ Automatic | Varies |
-
-### Vercel (Alternative)
+### Vercel (Recommended)
 
 1. **Push your code to GitHub**
 2. **Connect your repository to Vercel**
@@ -255,14 +207,45 @@ npm run preview  # Preview production build
    - `VITE_GEMINI_API_KEY`: Your Gemini API key (optional fallback)
 4. **Deploy** - Vercel will automatically build and deploy your app
 
-### Manual Deployment
+### Netlify
 
-1. **Build the application**
+1. **Push your code to GitHub**
+2. **Connect your repository to Netlify**
+3. **Set environment variables** in Netlify dashboard:
+   - `VITE_OPENAI_API_KEY`: Your OpenAI API key (recommended)
+   - `VITE_GEMINI_API_KEY`: Your Gemini API key (optional fallback)
+4. **Configure build settings:**
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+5. **Deploy** - Netlify will automatically build and deploy your app
+
+### Manual Static Hosting
+
+1. **Build the application:**
    ```bash
    npm run build
    ```
 
-2. **Deploy the `dist` folder** to any static hosting service
+2. **Deploy the `dist` folder** to any static hosting service:
+   - AWS S3 + CloudFront
+   - Google Cloud Storage + CDN
+   - DigitalOcean App Platform
+   - Any traditional web host
+
+3. **Configure environment variables** at the hosting provider level or build with `.env` file
+
+### Hosting Options Comparison
+
+| Feature | Vercel | Netlify | Manual Hosting |
+|---------|--------|---------|----------------|
+| **Cost** | Free tier available | Free tier available | Depends on provider |
+| **Setup** | Easy (one-click) | Easy (one-click) | Manual |
+| **Auto-deploy** | ✅ Automatic | ✅ Automatic | ❌ Manual |
+| **Custom Domain** | ✅ Supported | ✅ Supported | ✅ Varies |
+| **Environment Variables** | ✅ Dashboard | ✅ Dashboard | ❌ Manual config |
+| **Build Time** | ~2 minutes | ~2 minutes | N/A |
+| **SSL Certificate** | ✅ Automatic | ✅ Automatic | Varies |
+| **Serverless Functions** | ✅ Included | ✅ Included | ❌ Separate setup |
 
 ## Security & Privacy
 
@@ -307,26 +290,27 @@ npm run preview  # Preview production build
 
 5. **Build/Deploy Issues**
    - Ensure all dependencies are installed: `npm install`
-   - Check that environment variables/secrets are properly configured
-   - For GitHub Pages: Check Actions tab for deployment logs
+   - Check that environment variables are properly configured
    - For Vercel: Verify your `vercel.json` configuration
+   - For Netlify: Check build settings in Netlify dashboard
+   - For manual hosting: Ensure files are correctly uploaded to root directory
 
-### GitHub Pages Specific Issues
+### Hosting Provider Specific Issues
 
-1. **404 errors after deployment**
-   - Ensure `base` path in `vite.config.js` matches your repository name
-   - Current setting: `base: '/AI-Dashboard/'`
-   - Update if your repository has a different name
+**Vercel:**
+- Check deployment logs in Vercel dashboard
+- Verify environment variables are correctly set
+- Ensure build command is set to `npm run build`
 
-2. **Deployments failing**
-   - Check Actions tab in GitHub repository for detailed error logs
-   - Ensure repository secrets are properly configured
-   - Verify GitHub Pages is enabled in repository settings
+**Netlify:**
+- Check build logs in Netlify dashboard
+- Verify publish directory is set to `dist`
+- Ensure environment variables are correctly configured
 
-3. **Environment variables not working**
-   - Make sure secrets are added at repository level (not organization)
-   - Secrets must be named exactly: `VITE_OPENAI_API_KEY` and `VITE_GEMINI_API_KEY`
-   - Check that secrets are added to Actions, not just general repository secrets
+**Manual Hosting:**
+- Verify all files from `dist` folder are uploaded
+- Check that server serves static files correctly
+- Ensure environment variables are handled properly by your hosting provider
 
 ### Tips
 
