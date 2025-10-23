@@ -46,16 +46,18 @@ A modern Vue.js web application that allows you to paste Google Sheets data and 
 
 [![Deploy to GitHub Pages](https://github.com/actions/workflows/deploy.yml/badge.svg)](https://github.com/<your-username>/AI-Dashboard/actions)
 
-**Manual GitHub Pages Setup:**
+**Automatic GitHub Pages Setup:**
 1. **Push your code to GitHub**
 2. **Enable GitHub Pages** in your repository settings:
    - Go to Settings → Pages
-   - Source: Deploy from a branch
-   - Branch: `main` and folder: `/root`
+   - Source: GitHub Actions
 3. **Configure Secrets** in repository settings:
-   - `VITE_OPENAI_API_KEY`: Your OpenAI API key (optional)
-   - `VITE_GEMINI_API_KEY`: Your Gemini API key (optional)
+   - Go to Settings → Secrets and variables → Actions
+   - Add `VITE_OPENAI_API_KEY`: Your OpenAI API key (optional)
+   - Add `VITE_GEMINI_API_KEY`: Your Gemini API key (optional)
 4. **Push changes** to trigger automatic deployment
+
+   *The workflow includes all necessary permissions for deployment.*
 
 ### Option 3: One-Click Vercel Deployment
 
@@ -220,13 +222,17 @@ npm run preview  # Preview production build
 1. **Push your code to GitHub**
 2. **Enable GitHub Pages** in repository settings:
    - Go to Settings → Pages
-   - Source: Deploy from a branch
-   - Branch: `main` and folder: `/root`
+   - Source: GitHub Actions
 3. **Configure Repository Secrets**:
    - Go to Settings → Secrets and variables → Actions
    - Add `VITE_OPENAI_API_KEY`: Your OpenAI API key (optional)
    - Add `VITE_GEMINI_API_KEY`: Your Gemini API key (optional)
 4. **Deploy** - GitHub Actions will automatically build and deploy on push
+
+**Important:**
+- The workflow file includes all necessary permissions
+- Make sure `package-lock.json` is committed to your repository
+- No manual GitHub Pages configuration needed beyond selecting "GitHub Actions" as source
 
 ### Hosting Options Comparison
 
